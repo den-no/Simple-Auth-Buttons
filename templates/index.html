@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Simple Auth Buttons</title>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
+<body>
+
+{% for message in messages %}
+<div class="alert alert-{{ massage.tags }} alert-dismissable fade show" role="alert">
+    <strong>Message:</strong> {{ message.message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+
+<!--
+    <div class="auth-buttons">
+        
+        {% if user.is_authenticated %}
+        <h2>Welcome {{ user.username }}</h2> <br>
+        <h3>You are successfully logged in.</h3><br>
+        <a href=''><button id="signout" onclick="alert('Signing Out...')">Sign Out</button></a>
+        {% else %}
+        <a href={% url "signin" %}><button id="signin" onclick="alert('Redirect to Sign In page')">Sign In</button></a>
+        <a href={% url "signup" %}><button id="signup" onclick="alert('Redirect to Sign Up page')">Sign Up</button></a>
+        <a href=''><button id="signout" onclick="alert('Signing Out...')">Sign Out</button></a>
+        {% endif %}
+
+    </div> 
+-->
+    <div class="auth-buttons">
+    {% if user.is_authenticated %}
+        <h2>Welcome {{ user.username }}</h2>
+        <br>
+        <h3>You are successfully logged in.</h3>
+        <br>
+        <form method="POST" action="{% url 'signout' %}">
+            {% csrf_token %}
+            <button id="signout" type="submit" onclick="alert('Signing Out...')">Sign Out</button>
+        </form>
+    {% else %}
+        <a href="{% url 'signin' %}">
+            <button id="signin" onclick="alert('Redirect to Sign In page')">Sign In</button>
+        </a>
+        <a href="{% url 'signup' %}">
+            <button id="signup" onclick="alert('Redirect to Sign Up page')">Sign Up</button>
+        </a>
+    {% endif %}
+</div>
+
+
+</body>
+</html>

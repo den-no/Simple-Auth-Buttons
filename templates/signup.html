@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'signup.css' %}">
+    <!-- For the eye icons, you might use a font icon library like Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="signup-container">
+        <form action="/signup" method="POST" class="signup-form">
+            {% csrf_token %}
+
+            <div class="message-container">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="message {{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <h2>Sign Up</h2>
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your name" required>
+            <span id="username-error" class="error-message"></span>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <label for="password">Password</label>
+            <div class="password-input-container">
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+                <span class="toggle-password" data-target="password">
+                    <i class="fas fa-eye"></i> <!-- Eye icon -->
+                </span>
+            </div>
+            <span id="password-error" class="error-message"></span>
+
+            <label for="password2">Confirm Password</label>
+            <div class="password-input-container">
+                <input type="password" id="password2" name="password2" placeholder="Confirm your password" required>
+                <span class="toggle-password" data-target="password2">
+                    <i class="fas fa-eye"></i> <!-- Eye icon -->
+                </span>
+            </div>
+            <span id="password2-error" class="error-message"></span>
+            
+            <button type="submit">Sign Up</button>
+          <a href="{% url 'signin' %}" class="signin-link">Already have an account? Sign In</a>
+        </form>
+    </div>
+
+    <script src="{% static 'signup.js' %}"></script>
+</body>
+</html>
+
+
