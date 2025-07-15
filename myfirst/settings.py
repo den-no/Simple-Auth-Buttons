@@ -13,12 +13,50 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from . info import *
 
+import environ
+import os
 
-EMAIL_USE_TLS = EMAIL_USE_TLS
-EMAIL_HOST = EMAIL_HOST
-EMAIL_HOST_USER = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
-EMAIL_PORT = EMAIL_PORT
+# Define BASE_DIR first — this points to the project root directory (where manage.py is)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Use BASE_DIR if you have it set, else path to .env
+
+
+from decouple import config
+
+# ... your other settings ...
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # Or your SMTP server [3]
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True # Mandatory for personal email providers [5]
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+import environ
+
+
+
+env = environ.Env()
+environ.Env.read_env() # Reads the .env file
+
+# ... your other settings ...
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST', default='smtp.gmail.com') # You can also put EMAIL_HOST in .env [5]
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+
+# EMAIL_USE_TLS = EMAIL_USE_TLS
+# EMAIL_HOST = EMAIL_HOST
+# EMAIL_HOST_USER = EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+# EMAIL_PORT = EMAIL_PORT
 
 import os
 
