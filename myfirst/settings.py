@@ -60,7 +60,7 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 
 import os
 
-SECRET_KEY = os.environ.get('2*+nv%*p&9=x3vn3ik735a)$!b!03-pj7(78$*n^tpc$b2%gd1')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key-for-dev')
 
 
 
